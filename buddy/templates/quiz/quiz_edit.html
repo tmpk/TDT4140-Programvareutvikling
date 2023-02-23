@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block navbar %}
+    {% include "professor/professor_menu.html" %}
+{% endblock %}
+
+{% block page-content %}
+    <div class="container">
+        <div class="col-12">
+
+            <div class="card">
+                <div class="card-header">
+                    {{ quiz.name }}
+                </div>
+                <div class="card-block">
+                    <form action="" method="post">{% csrf_token %}
+                        {{ form.as_p }}
+                        <input class="btn btn-success" type="submit" value="Update"/>
+                    </form>
+                </div>
+
+
+                <ul class="list-group">
+                    {% if questions %}
+                        {% for question in questions %}
+                            <li class="list-group-item">
+                                <div class="row col-12">
+                                        <div class="col-8">
+                                            {{ question.question_text }}
+                                        </div>
+                                        <div class="col-4 text-right">
+                                            <a class="btn btn-info left-button"
+                                               href="{% url 'buddy:question-edit' question.pk %}">
+                                                Edit
+                                            </a>
+                                            <a class="btn btn-danger right-button"
+                                               href="{% url 'buddy:question-delete' question.pk %}">
+                                                Delete
+                                            </a>
+                                    </div>
+                                </div>
+                            </li>
+                        {% endfor %}
+                    {% else %}
+                        <li class="list-group-item">This quiz doesn't have any questions.</li>
+                    {% endif %}
+                    <li class="list-group-item">
+                        <a target="_self"
+                           class="btn btn-success"
+                           href="{% url 'buddy:question-add' quiz.pk %}">
+                            Add new question
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}

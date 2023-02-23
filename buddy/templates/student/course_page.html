@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+{% block page-content %}
+    <div class="container">
+        <div class="row justify-content-md-center">
+            <div class="col-10 col-md-auto">
+                <h2>{{ enr_course }} - {{ course.name }}</h2>
+            </div>
+        </div>
+
+        <!-- Dropdown upcoming quizzes -->
+        <div class="card two-top-margin">
+            <h3 class="card-header" data-toggle="collapse" href="#collapse1">
+                <a>Upcoming quizzes</a>
+            </h3>
+            <div id="collapse1" class="collapse show">
+                <ul class="list-group collapse">
+                    {% if upcoming_quizzes %}
+                        {% for q in upcoming_quizzes %}
+                            {% if q.course_id == course.COURSE_ID %}
+
+                                <li class="list-group-item">
+                                    <div class="row col-12 align-middle ">
+                                        <div class="col-5 quiz-name">
+                                            {{ q.name }}
+                                        </div>
+                                        <div class="col-7 text-right">
+                                            <a class="btn btn-info"
+                                               href="{% url 'buddy:quiz_student' q.QUIZ_ID %}">
+                                                Take quiz
+                                            </a>
+                                            {% if is_ta %}
+                                                <a class="btn btn-info"
+                                                   href="{% url 'buddy:quiz-edit' q.QUIZ_ID %}">
+                                                    Edit quiz
+                                                </a>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                    {% else %}
+                        <li class="list-group-item">
+                            Looks like you've done it all! Sit back, and relax until your professor posts a new quiz.
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+
+        <!-- Dropdown completed quizzes -->
+        <div class="card two-top-margin">
+            <h3 class="card-header" data-toggle="collapse" href="#collapse2">
+                <a>Completed quizzes</a>
+            </h3>
+            <div id="collapse2" class="collapse">
+                <ul class="list-group collapse">
+                    {% if completed_quizzes %}
+                        {% for q in completed_quizzes %}
+                            {% if q.course_id == course.COURSE_ID %}
+
+                                <li class="list-group-item">
+                                    <div class="row col-12 align-middle ">
+                                        <div class="col-5 quiz-name">
+                                            {{ q.name }}
+                                        </div>
+                                        <div class="col-7 text-right">
+                                            <a class="btn btn-info"
+                                               href="{% url 'buddy:results' q.QUIZ_ID %}">
+                                                Se results
+                                            </a>
+                                            {% if is_ta %}
+                                                <a class="btn btn-info"
+                                                   href="{% url 'buddy:quiz-edit' q.QUIZ_ID %}">
+                                                    Edit quiz
+                                                </a>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                    {% else %}
+                        <li class="list-group-item">
+                            You haven't completed any quizzes yet.
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+
+        <!-- Let ta's add quizzes -->
+        {% if is_ta %}
+            <a class="btn btn-success"
+               href="{% url 'buddy:quiz-create' course.pk %}">
+                Create new quiz
+            </a>
+        {% endif %}
+    </div>
+{% endblock %}

@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% load mathfilters %}
+{% block navbar %}
+    {% include "professor/professor_menu.html" %}
+{% endblock %}
+
+{% block page-content %}
+    <div class="container">
+        <div class="col-12">
+
+            <div class="card">
+                <div class="card-header">
+                    {{ quiz.name }}
+                </div>
+                <div class="card-block">
+                  <div class="col-8">
+                  <h2> {{ quiz_questions.question }} </h2>
+                </div>
+
+                </div>
+
+
+                <ul class="list-group">
+                    {% if quiz_questions %}
+                        {% for question in quiz_questions %}
+                            <li class="list-group-item">
+                                <div class="row col-12">
+                                        <div class="col-8">
+                                            {{ question }}
+                                        </div>
+
+                                        {% for a in q_a %}
+                                        {% if a.question_id is question.QUESTION_ID %}
+
+                                        {{ a.answer_text}} - {{ a.answer_count }} - {{a.answer_count|div:total_answer_count|mul:100}}%
+
+                                        <br>
+                                        {% endif %}
+                                        {% endfor %}
+
+                                        <div class="row justify-content-md-center">
+
+                                </div>
+                            </li>
+                        {% endfor %}
+
+                    {% else %}
+                        <li class="list-group-item">This quiz doesn't have any questions.</li>
+                    {% endif %}
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}

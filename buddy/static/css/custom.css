@@ -1,0 +1,84 @@
+/* Sticky footer styles
+-------------------------------------------------- */
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    /* Margin bottom by footer height */
+    margin-bottom: 6rem;
+    margin-top: 6rem;
+}
+
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    /* Set the fixed height of the footer here */
+    height: 3rem;
+    background-color: #f5f5f5;
+}
+
+.two-top-margin {
+    margin-top: 2rem;
+}
+
+.quiz-name {
+    margin-bottom: auto;
+    margin-top: auto;
+}
+
+.left-button {
+    margin-right: -5px;
+    border-top-right-radius: 0rem;
+    border-bottom-right-radius: 0rem;
+}
+
+.middle-button {
+    margin: 0px;
+    border-radius: 0px;
+}
+
+.right-button {
+    margin-left: -4px;
+    border-top-left-radius: 0rem;
+    border-bottom-left-radius: 0rem;
+}
+
+.add-quiz-button-container {
+    padding: 0rem;
+}
+
+/*professor view styling */
+
+#upcoming_quiz {
+    background-color: #99ee99;
+}
+
+#completed_quiz {
+    background-color: #ee9999;
+}
+
+/* Custom page CSS
+-------------------------------------------------- */
+
+/* Not required for template or sticky footer method. */
+
+.container .text-muted {
+    margin: 20px 0;
+}
+
+.footer > .container {
+    padding-right: 15px;
+    padding-left: 15px;
+}
+
+code {
+    font-size: 80%;
+}
+
+/*
+CSS for login
+ */

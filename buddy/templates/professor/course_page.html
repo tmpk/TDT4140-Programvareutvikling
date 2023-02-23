@@ -1,0 +1,156 @@
+{% extends "base.html" %}
+
+{% block navbar %}
+    {% include "professor/professor_menu.html" %}
+{% endblock %}
+
+
+{% block page-content %}
+    <div class="container">
+        <div class="row justify-content-md-center">
+            <div class="col-10 col-md-auto">
+                    <h2> {{ course.course_code }} - {{ course.name }} </h2>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-8">
+                <!-- This is the dropdown menu for the upcoming quizzes -->
+                <div class="card two-top-margin">
+                    <h3 class="card-header" data-toggle="collapse" href="#collapse1">
+                        <a>Upcoming quizzes</a>
+                    </h3>
+                    <div id="collapse1" class="collapse show">
+                        <div class="card-block">
+                            <p class="card-text">Here are all active quizes. This includes quizzes that are active and
+                                those
+                                that
+                                are upcoming</p>
+                        </div>
+                        <ul class="list-group collapse">
+                            {% if upcoming_quiz_list %}
+                                {% for quiz in upcoming_quiz_list %}
+                                    <li class="list-group-item">
+                                        <div class="row col-12 align-middle ">
+                                            <div class="col-5 quiz-name">
+                                                {{ quiz.name }}
+                                            </div>
+                                            <div class="col-7 text-right">
+                                                <a class="btn btn-success left-button"
+                                                   href="{% url 'buddy:prof-results' quiz.QUIZ_ID %}">
+                                                    Results
+                                                </a>
+                                                <a class="btn btn-info middle-button"
+                                                   href="{% url 'buddy:quiz-edit' quiz.pk %}">
+                                                    Edit
+                                                </a>
+                                                <a class="btn btn-danger right-button"
+                                                   href="{% url 'buddy:quiz-delete' quiz.pk %}">
+                                                    Delete
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </li>
+                                {% endfor %}
+                            {% else %}
+                                <li class="list-group-item">
+                                    There aren't any upcoming or active quizes. You may add a new quiz by clicking
+                                    the "Add quiz" button below
+                                </li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                </div>
+
+
+                <!-- This is the dropdown menu for the completed quizzes -->
+                <div class="card two-top-margin">
+                    <h3 class="card-header" data-toggle="collapse" href="#collapse2">
+                        <a>Completed quizzes</a>
+                    </h3>
+                    <div id="collapse2" class="collapse">
+                        <div class="card-block">
+                            <p class="card-text">Here are all passed quizes. This is quizes where the due date has.
+                                Students are no longer able to respond to the quiz.</p>
+                        </div>
+                        <ul class="list-group collapse">
+                            {% for quiz in completed_quiz_list %}
+                                <li class="list-group-item">
+                                    <div class="row col-12 align-middle ">
+                                        <div class="col-5 quiz-name">
+                                            {{ quiz.name }}
+                                        </div>
+                                        <div class="col-7 text-right">
+                                            <a class="btn btn-success left-button"
+                                               href="{% url 'buddy:quiz-edit' quiz.pk %}">
+                                                Results
+                                            </a>
+                                            <a class="btn btn-info middle-button"
+                                               href="{% url 'buddy:quiz-edit' quiz.pk %}">
+                                                Edit
+                                            </a>
+                                            <a class="btn btn-danger right-button"
+                                               href="{% url 'buddy:quiz-delete' quiz.pk %}">
+                                                Delete
+                                            </a>
+                                        </div>
+                                    </div>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+
+
+                <div class="card col-4 offset-4 two-top-margin add-quiz-button-container">
+                    <a class="btn btn-success"
+                       href="{% url 'buddy:quiz-create' course.pk %}">
+                        Create new quiz
+                    </a>
+                </div>
+
+
+            </div>
+            <!-- Add a teaching assistant -->
+            <div class="form-group col-4" id="add_ta">
+                <div class="card two-top-margin">
+                    <h3 class="card-header">
+                        <a>Teaching assistants</a>
+                    </h3>
+                    <div class="card-block">
+                        <form action="{% url 'buddy:add-ta' course_code %}" method="post" class="form-horizontal">
+                            {% csrf_token %}
+                            <div class="form-group row">
+                                <div class="">
+                                    <label for="student_email" class="form-label">Add a teaching
+                                        assistant:</label>
+                                    <input class="form-control" type="text" placeholder="ex: olanor@stud.ntnu.no"
+                                           id="student_email"
+                                           name="student_email">
+                                    <input class="btn btn-success" type="submit" value="Submit">
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                    <ul class="list-group collapse">
+                        {% if teaching_assistants %}
+                            {% for assistant in teaching_assistants %}
+                                <li class="list-group-item">
+                                    <div class="row col-12 align-middle ">
+                                        <p class="quiz-name">{{ assistant }}</p>
+                                    </div>
+                                </li>
+                            {% endfor %}
+                        {% else %}
+                            <li class="list-group-item">
+                                You haven't reigstered any teaching assistants. You will need to add
+                                them using their e-mail adress
+                            </li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

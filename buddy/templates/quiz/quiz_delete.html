@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block navbar %}
+{% include "professor/professor_menu.html" %}
+{% endblock %}
+{% block page-content %}
+<div class="container">
+  <div class="row">
+    <div class="panel panel-default">
+      <!-- Default panel contents -->
+      <div class="panel-heading">
+          Confirm deletion
+          <a  target="_self"
+            class="btn btn-info"
+            href="{% url 'buddy:get_course_site' quiz.course.course_code %}">
+            Cancel
+          </a>
+      </div>
+      <div class="panel-body">
+          <form action="" method="post">{% csrf_token %}
+            <p>Are you sure you wish to delete the quiz: {{ quiz }}</p>
+            <input class="btn btn-danger col-sm-2" type="submit" value="Confirm" />
+           </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

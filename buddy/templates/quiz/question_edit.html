@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% block navbar %}
+    {% include "professor/professor_menu.html" %}
+{% endblock %}
+{% block page-content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="row col-12">
+                            <div class="col-7 ">
+                                <p>{{ question.quiz.name }}</p>
+                            </div>
+                            <div class="col-5 text-right">
+                                <a class="btn btn-info"
+                                   href="{% url 'buddy:quiz-edit' question.quiz.pk %}">
+                                    To quiz
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-block">
+                        <form action="" method="post">{% csrf_token %}
+                            {{ form.as_p }}
+                            <input class="btn btn-success" type="submit" value="Update"/>
+                        </form>
+                    </div>
+                    <ul class="list-group">
+                        {% if answers %}
+                            {% for answer in answers %}
+                                <li class="list-group-item">
+                                    <div class="row col-12">
+                                        <div class="col-8">
+                                            {{ answer.answer_text }}
+                                            -
+                                            {{ answer.correct_answer }}
+                                        </div>
+                                        <div class="col-4 text-right">
+                                            <a
+                                                    class="btn btn-info left-button"
+                                                    href="{% url 'buddy:answer-edit' answer.pk %}">
+                                                Edit
+                                            </a>
+                                            <a
+                                                    class="btn btn-danger right-button"
+                                                    href="{% url 'buddy:answer-delete' answer.pk %}">
+                                                Delete
+                                            </a>
+                                        </div>
+                                    </div>
+                                </li>
+                            {% endfor %}
+                        {% else %}
+                            <li class="list-group-item">This question doesn't have any alternatives yet.</li>
+                        {% endif %}
+                        <li class="list-group-item">
+                            <a class="btn btn-success"
+                               href="{% url 'buddy:answer-create' question.pk %}">
+                                Add new answer
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

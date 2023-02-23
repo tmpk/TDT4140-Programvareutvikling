@@ -1,0 +1,28 @@
+{% extends "base.html" %} {% block includes %} {% load static %}
+<link href="{% static "css/account-styles.css" %}" rel="stylesheet"> {% endblock %} {% block navbar %} {% endblock %} {% block page-content %}
+<div class="container">
+    <form class="form-signin" action="{% url 'buddy:login' %}" method="post" role="form">
+        {% csrf_token %}
+        <h2 class="form-signin-heading">Please sign in</h2>
+        <label for="username" class="sr-only">Email address</label>
+        <input type="text" name="username" id="username" class="form-control" placeholder="Username" required autofocus>
+        <label for="password" class="sr-only">Password</label>
+        <input type="password" name="password" id="password" class="form-control" placeholder="Password" required>
+        <div class="checkbox">
+            <label>
+            <input type="checkbox" value="remember-me"> Remember me
+          </label>
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+        </div>
+        <div class="col-sm-6">
+            <a class="btn btn-lg btn-primary btn-block" href="{% url 'buddy:register' %}">Register</a>
+        </div>
+        </div>
+
+    </form>
+</div>
+<!-- /container -->
+{% endblock %} {% block footer %} {% endblock %}

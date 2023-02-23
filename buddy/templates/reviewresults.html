@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block page-content %}
+<div class="container">
+    
+   <form>
+    {% csrf_token %}
+    {% for cq in completedquestions %}
+    {% if not cq.mca %}
+        <h1>{{cq.cq_text}}</h1>
+        <fieldset id="{{cq.q_id_id}}">
+        {% for answer in answers %}
+        {% if answer.question_id is cq.q_id_id %}
+        <div class="form-check">
+            <label class="form-check-label">
+                    {% if answer.ANSWER_ID is cq.given_answer_id %}
+                    <input class ="form-check-input" type="radio" value="{{answer.ANSWER_ID}}" name="{{cq.q_id_id}}" id="{{answer.ANSWER_ID}}" checked="checked">
+                        {% if cq.correct_a %}
+                             <font color="green">{{answer.answer_text}}</font>
+                        {% else %}
+                            <font color="red">{{answer.answer_text}}</font>
+                        {% endif %}
+                    {% else %}
+                    <input class ="form-check-input" type="radio" value="{{answer.ANSWER_ID}}" name="{{cq.q_id_id}}" id="{{answer.ANSWER_ID}}">
+                        {% if answer.correct_answer %}
+                            <font color="green">{{answer.answer_text}}</font>
+                        {% else %}
+                            {{answer.answer_text}}
+                        {% endif %}
+                    {% endif %}
+            </label>
+        </div>
+        {% endif %}
+        {% endfor %}
+        </fieldset>
+    {% else %}
+    <h1>{{ cq.cq_text }}</h1>
+    <fieldset id={{cq.q_id_id}}>
+        {% for answer in answers %}
+        {% if answer.question_id is cq.q_id_id %}
+         <div class="form-check">
+            <label class="form-check-label">
+                <input class ="form-check-input" type="checkbox" value="{{answer.ANSWER_ID}}" name="{{cq.q_id_id}}" id="{{answer.ANSWER_ID}}">
+                {% if answer.ANSWER_ID is cq.given_answer_id %}
+                    {% if cq.correct_a %}
+                        <font color="green">{{answer.answer_text}}</font>
+                    {% else %}
+                        <font color="red">{{answer.answer_text}}</font>
+                    {% endif %}
+                {% endif %}
+        {% endif %}
+        {% endfor %}
+            </label>
+        </div>
+    {% endif %}
+    {% endfor %}
+    </fieldset>
+    </form>
+</div>
+
+{% endblock %}

@@ -1,0 +1,46 @@
+<nav class="navbar navbar-toggleable-md navbar-inverse fixed-top bg-inverse">
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
+            data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false"
+            aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <a class="navbar-brand" href="{% url 'buddy:index' %}">Study planner</a>
+    <div class="collapse navbar-collapse" id="navbarCollapse">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link"
+                   href="{% url 'buddy:index' %}">Dashboard</a>
+            </li>
+            {% for element in courses %}
+                <li class="nav-item">
+                    <a class="nav-link"
+                       href="{% url 'buddy:get_course_site' element.course.course_code %}">
+                       {{ element.course.course_code }}</a>
+                </li>
+            {% endfor %}
+            <!-- This is for the notifications -->
+            {% if created_quiz or edited_quiz %}
+            <div class="dropdown">
+              <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">Notifications
+              <span class="caret"></span></button>
+              <ul class="dropdown-menu">
+                {% if created_quiz %}
+                <li class="dropdown-header">Created quizzes</li>
+                {% for element in created_quiz %}
+                <li><a href="{% url 'buddy:quiz-edit' element.quiz_id %}">{{ element.course.course_code }} - {{ element }}</a></li>
+                {% endfor %}
+                {% endif %}
+                <div class="dropdown-divider"> </div>
+                {% if edited_quiz %}
+                <li class="dropdown-header">Changed/added questions</li>
+                {% for element in edited_quiz %}
+                <li><a href="{% url 'buddy:question-edit' element.question.QUESTION_ID %}">{{ element.course.course_code }} - {{ element.quiz }}</a></li>
+                {% endfor %}
+                {% endif %}
+              </ul>
+            </div>
+            {% endif %}
+        </ul>
+        <a class="btn btn-outline-success my-2 my-sm-0" href="{% url 'buddy:logout' %}"}>Logout</a>
+    </div>
+</nav>

@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% block page-content %}
+    <div class="container">
+        <div class="row justify-content-md-center">
+            <div class="col-10 col-md-auto">
+                <h2> Your courses </h2>
+            </div>
+        </div>
+        <div class="col-12 two-top-margin">
+            {% if enrolled_courses %}
+                <div class="card-deck">
+                    {% for enr_course in enrolled_courses %}
+                        <!--<div class="">-->
+                        <div class="card">
+                            <div class="card-header course-card-header">
+                                {{ enr_course.course_code }} - {{ enr_course.name }}
+                            </div>
+                            <div class="card-block">
+                                <div class="card-block">In the future we will let you easily see if there's a new
+                                    quiz avalable
+                                </div>
+
+                                <a class="btn btn-success"
+                                   href="{% url 'buddy:student-course-page' enr_course.course_code %}">Go to the course
+                                    page</a>
+                            </div>
+                        </div>
+                        <!--</div>-->
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="row justify-content-md-center two-top-margin">
+            <div class="col-10 col-md-auto">
+                <h3> Enroll in a class </h3>
+            </div>
+        </div>
+
+        <div class="col-4 offset-4">
+            <div class="card">
+                <div class="card-block text-center">
+                    <form action="{% url 'buddy:enroll' %}" method="post" role="form">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="stud_subject_code">Subject code</label>
+                            <select name="course" class="form-control" name="course" id="course">
+                                {% for course in all_courses %}
+                                    {% if course not in enrolled_courses %}
+                                        <option value="{{ course.course_code }}">{{ course.course_code }}</option>
+                                    {% endif %}
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-success btn-primary">Add new course</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

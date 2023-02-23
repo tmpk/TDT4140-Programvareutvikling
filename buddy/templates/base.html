@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../favicon.ico">
+
+    <!-- Font awesome icons -->
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
+
+    <title>{% block title %} Study planner {% endblock %}</title>
+
+    {% load static %}
+    <!-- Bootstrap core CSS -->
+    <link href="{% static "css/bootstrap.min.css" %}" rel="stylesheet">
+    <!-- Custom styles can be injected by inheriting blocs  -->
+    <link href="{% static "css/custom.css" %}" rel="stylesheet">
+    {% block includes %}{% endblock %}
+</head>
+
+<body>
+
+<!-- Navbar is in student_menu.html file. Child pages can use an empty block to remove the menu from that page. -->
+{% block navbar %}
+    {% include "student/student_menu.html" %}
+{% endblock %}
+
+<!-- Begin page content -->
+{% block page-content %}
+    <div class="container">
+
+        <div class="page-header">
+            <h1>Sticky footer with fixed navbar</h1>
+        </div>
+        <p class="lead">Pin a fixed-height footer to the bottom of the viewport in desktop browsers with this custom
+            HTML and CSS. A fixed navbar has been added with <code>padding-top: 60px;</code> on the <code>body &gt;
+                .container</code>.</p>
+        <p>Back to <a href="../sticky-footer">the default sticky footer</a> minus the navbar.</p>
+
+    </div>
+{% endblock %}
+
+<!--
+    Footer wrapped in an overridable block to enable removing the footer entirely.
+    Otherwise only footer-content should be overridden if needed.
+-->
+{% block footer %}
+    <footer class="footer">
+        <div class="container">
+            <p class="text-muted">{% block footer-content %} Copyright © 2017, Gruppe 99 {% endblock %} </p>
+        </div>
+    </footer>
+{% endblock %}
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js"
+        integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"
+        integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb"
+        crossorigin="anonymous"></script>
+<script src="{% static "js/bootstrap.min.js" %}"></script>
+{% block script-include %}  {% endblock %}
+</body>
+</html>

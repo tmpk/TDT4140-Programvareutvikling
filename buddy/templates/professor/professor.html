@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block navbar %}
+    {% include "professor/professor_menu.html" %}
+{% endblock %}
+
+{% block page-content %}
+    <div class="jumbotron">
+        <div class="container">
+            <h1 class="display-3">Howdy Professor!</h1>
+            <p>Welcome to the study planner system. You can find the classes you administer in the top navigation menu,
+                or add a class below </p>
+        </div>
+    </div>
+    <div class="container">
+        <form action="{% url 'buddy:addsubject' %}" method="post" id="add-course-form">
+            {% csrf_token %}
+            <h3 id="add_class_text">Add a class</h3>
+            <div class="form-group">
+                <label for="subject_code">Subject code</label>
+                <input class="form-control" type="text" placeholder="ex: TDT4140" id="subject_code"
+                       name="course_code">
+            </div>
+            <div class="form-group">
+                <label for="subject_name">Subject name</label>
+                <input class="form-control" type="text" placeholder="ex: Software development" id="subject_name"
+                       name="name">
+            </div>
+            <div class="form-group">
+                <label for="description">Please add a short description</label>
+
+                <input class="form-control" name="description" type="text"
+                       placeholder="ex: This course focuses on software development in teams." id="description">
+
+            </div>
+            <input class="btn btn-success" type="submit" value="Submit">
+        </form>
+    </div>
+{% endblock %}
